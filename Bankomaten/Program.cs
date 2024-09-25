@@ -12,7 +12,27 @@
             while (currentUser == true)
             {
                 int userChoice = Menu();
-            }
+                Console.Clear();
+                if (userChoice == 1)
+                {
+
+                }
+                if (userChoice == 2)
+                {
+
+                }
+                else if (userChoice == 3)
+                {
+
+                }
+                else
+                {
+                    Console.WriteLine("Loggar ut dig, vänta lite...");
+                    Thread.Sleep(1000);
+                    currentUser = false;
+                }
+            }   
+
             Console.ReadKey();
         }
 
@@ -72,9 +92,10 @@
         }
         private static int Menu()
         {
+            Console.Clear();
             Console.WriteLine("Vänligen välj önskad metod\n");
 
-            Console.WriteLine("1. Se ditt konton/saldo");  // Account method? return int?
+            Console.WriteLine("1. Se ditt konto(n)/saldo");  // Account method? return int?
             Console.WriteLine("2. Överför mellan konton"); // TransferBetweenAccounts method? return int?
             Console.WriteLine("3. Ta ut-/sätt in pengar"); // WithdrawalOrDeposit method? void?
             Console.WriteLine("4. Logga ut");              // Logout method? void?
@@ -104,6 +125,41 @@
                 userChoice = false;
             }
             return menu;
+        }
+        private static int Account(int userChoice)
+        {
+            int accountOne = 0;
+            int accountTwo = 0;
+            switch (userChoice)
+            {
+                case 1:
+                    accountOne = 14000; // kanske strings
+                    accountTwo = 0;
+                    Console.WriteLine($" Here are your Accounts\n #1 balance is: {accountOne}$\n" +
+                                      $"                                         {accountTwo}$");
+                    Console.ReadKey();
+                    break;
+                case 2:
+                    accountOne = 24000;
+                    Console.WriteLine($"Your Account balance is: {accountOne} ");
+                    break;
+                case 3:
+                    accountOne = 9500;
+                    Console.WriteLine($"Your Account balance is: {accountOne} ");
+                    break;
+                case 4:
+                    accountOne = 20000;
+                    Console.WriteLine($"Your Account balance is: {accountOne} ");
+                    break;
+                case 5:
+                    accountOne = 30000;
+                    Console.WriteLine($"Your Account balance is: {accountOne} ");
+                    break;
+                default:
+                    break;
+            }
+            Console.ReadKey();
+            return userChoice;
         }
     }
 }
