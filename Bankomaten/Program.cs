@@ -4,6 +4,7 @@
     {
         static void Main(string[] args)
         {
+            
 
             Console.ReadKey();
         }
@@ -62,6 +63,40 @@
 
             return logIn;
         }
+        private static int Menu()
+        {
+            Console.WriteLine("Vänligen välj önskad metod\n");
 
+            Console.WriteLine("1. Se ditt konton/saldo");  // Account method? return int?
+            Console.WriteLine("2. Överför mellan konton"); // TransferBetweenAccounts method? return int?
+            Console.WriteLine("3. Ta ut-/sätt in pengar"); // WithdrawalOrDeposit method? void?
+            Console.WriteLine("4. Logga ut");              // Logout method? void?
+
+            int menu = Convert.ToInt32(Console.ReadLine());
+
+            bool userChoice = true;
+            while (userChoice)
+            {
+                switch (menu)
+                {
+                    case 1:
+                        menu = 1;
+                        break;
+                    case 2:
+                        menu = 2;
+                        break;
+                    case 3:
+                        menu = 3;
+                        break;
+                    case 4:
+                        menu = 4;
+                        break;
+                    default:
+                        break;
+                }
+                userChoice = false;
+            }
+            return menu;
+        }
     }
 }
