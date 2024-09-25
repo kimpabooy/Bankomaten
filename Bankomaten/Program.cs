@@ -4,8 +4,15 @@
     {
         static void Main(string[] args)
         {
-            
+            bool userOk = Login();
+            bool currentUser = userOk;
 
+            Console.WriteLine("Välkommen till DinBank \n");
+
+            while (currentUser == true)
+            {
+                int userChoice = Menu();
+            }
             Console.ReadKey();
         }
 
