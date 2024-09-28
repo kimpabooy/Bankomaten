@@ -4,34 +4,31 @@
     {
         static void Main(string[] args)
         {
-            bool userOk = Login();
-            bool currentUser = userOk;
+            string currentUser = Login();
+            string activeUser = currentUser;
+            Console.WriteLine("Välkommen till DinBank \n");
 
-            if (userOk)
-            {
-                Console.WriteLine("Välkommen till DinBank \n");
-            }
-
-
-            while (currentUser == true)
+            while (currentUser == activeUser)
             {
                 int userChoice = Menu();
                 Console.Clear();
                 Console.WriteLine("Loggar ut dig, vänta lite...");
-                Thread.Sleep(1000);
-                userOk = Login();
-                currentUser = userOk;
+                Thread.Sleep(2000);
+                Console.Clear();
+                currentUser = Login();
+                currentUser = activeUser;
             }
 
 
             Console.ReadKey();
 
         }
-            private static bool Login()
+            static string Login()
             {
                 bool userIdOk = false;
                 bool userPasswordOk = false;
                 bool logIn = false;
+                string activeUser = "";
 
                 Console.WriteLine("Vänligen logga in");
                 Console.WriteLine();
@@ -48,6 +45,7 @@
                     if (userId == item)
                     {
                         userIdOk = true;
+                        activeUser = item;
                         break;
                     }
                     else
@@ -55,6 +53,7 @@
                         userIdOk = false;
                     }
                 }
+                
 
                 foreach (string item in userArrPassword)
                 {
@@ -69,7 +68,7 @@
                     }
                 }
 
-                if (userIdOk && userPasswordOk)
+                if (userIdOk && userPasswordOk == true)
                 {
                     logIn = true;
                 }
@@ -79,10 +78,10 @@
                     logIn = false;
                 }
 
-                return logIn;
+                return activeUser;
             }
 
-            private static int Menu()
+            static int Menu()
             {
                 Console.Clear();
                 Console.WriteLine("Vänligen välj önskad metod\n");
@@ -92,9 +91,9 @@
                 Console.WriteLine("3. Ta ut-/sätt in pengar"); // WithdrawalOrDeposit method? void?
                 Console.WriteLine("4. Logga ut");              // Logout method? void?
 
-                int menu = Convert.ToInt32(Console.ReadLine());
+                int menu = Convert.ToInt32(Console.ReadLine());  // säkra kod! (System.FormatException: )
 
-                bool userChoice = true;
+            bool userChoice = true;
                 while (userChoice)
                 {
                     switch (menu)
@@ -119,11 +118,12 @@
                 return menu;
             }
 
-            private static int Account(int userChoice)
+            static int Account(int userChoice)
             {
                 int accountOne = 0;
                 int accountTwo = 0;
-
+                //Login(users[0]);
+                
                 switch (userChoice)
                 {
                     case 1:
@@ -151,9 +151,7 @@
                     default:
                         break;
                 }
-                Console.ReadKey();
                 return userChoice;
             }
-        
     }
 }
