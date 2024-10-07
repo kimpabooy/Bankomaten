@@ -2,6 +2,21 @@ namespace Bankomaten
 {
     internal class Program
     {
+
+        static string[][] user = {   ["1","kim","921027"],
+                                     ["2","håkan","670111"],
+                                     ["3","alexander","951227"],
+                                     ["4","yvonne","670719"],
+                                     ["5","niklas","920304"]};
+
+        static string[][] userAccount = {   ["28000"],// [0,0]
+                                            ["20000","25000"],// [1,0][1,1]
+                                            ["12000","14000","34000"], // [2,0][2,1][2,2]
+                                            ["11000","34000","28000","205000"],// [3,0][3,1][3,2][3,3]
+                                            ["5000","40000","13000","60000","23000"]}; // [4,0][4,1][4,2][4,3][4,4]
+
+        static string[] accountName = { "Privatkonto","sparkonto", "semesterkonto", "pensionkonto", "nöje"};
+
         static void Main(string[] args)
         {
             bool activeLogin = true;
@@ -45,17 +60,11 @@ namespace Bankomaten
                 Console.Write("Lösenord: ");
                 string userPassword = Console.ReadLine();
 
-                string[][] users = { ["1","kim","921027"],
-                                     ["2","håkan","670111"],
-                                     ["3","alexander","951227"],
-                                     ["4","yvonne","670719"],
-                                     ["5","niklas","920304"]};
-
-                for (int i = 0; i < users.Length; i++)
+                for (int i = 0; i < user.Length; i++)
                 {
-                    if (userId == users[i][1] && userPassword == users[i][2])
+                    if (userId == user[i][1] && userPassword == user[i][2])
                     {
-                        activeUser = (users[i][0]);
+                        activeUser = (user[i][0]);
                         return activeUser;
                     }
                 }
@@ -104,7 +113,7 @@ namespace Bankomaten
                         Account(Convert.ToInt32(activeUser));
                         break;
                     case 2:
-                        menu = 2;
+                        //Transfer();
                         break;
                     case 3:
                         menu = 3;
@@ -119,54 +128,21 @@ namespace Bankomaten
         }
         static int Account(int userChoice)
         {
-            int accountOne;
-            int accountTwo;
-            int accountThree;
-            int accountFour;
-            int accountFive;
-
-            switch (userChoice)
+            Console.WriteLine("Here are your accounts: ");
+            userChoice = userChoice - 1; // användare
+            for (int i = 0; i < userAccount[userChoice].Length; i++)
             {
-                case 1:
-                    accountOne = 14000;
-                    Console.WriteLine($" Here are your Accounts\n #1 balance is: {accountOne}$\n ");
-                    Console.ReadKey();
-                    break;
-                case 2:
-                    accountOne = 24000;
-                    accountTwo = 580;
-                    Console.WriteLine($" Here are your Accounts\n #1 balance is: {accountOne}$\n #2 balance is: {accountTwo}$");
-                    Console.ReadKey();
-                    break;
-                case 3:
-                    accountOne = 9500;
-                    accountTwo = 580;
-                    accountThree = 580;
-                    Console.WriteLine($"Your Account balance is: #1 balance is: {accountOne}$ #2 balance is: {accountTwo}$ #3 balance is: {accountThree}$ ");
-                    Console.ReadKey();
-                    break;
-                case 4:
-                    accountOne = 20000;
-                    accountTwo = 580;
-                    accountThree = 580;
-                    accountFour = 580;
-                    Console.WriteLine($"Your Account balance is: #1 balance is: {accountOne}$ #2 balance is: {accountTwo}$ #3 balance is: {accountThree}$ #4 balance is: {accountFour}$");
-                    Console.ReadKey();
-                    break;
-                case 5:
-                    accountOne = 30000;
-                    accountTwo = 30000;
-                    accountThree = 30000;
-                    accountFour = 30000;
-                    accountFive = 30000;
-                    Console.WriteLine($"Your Account balance is: #1 balance is: {accountOne}$ #2 balance is: {accountTwo}$ #3 balance is: {accountThree}$ #4 balance is: {accountFour}$ #5 balance is: {accountFive}$");
-                    Console.ReadKey();
-                    break;
-                default:
-                    break;
+                Console.WriteLine($"{accountName[i]}: {userAccount[userChoice][i]}kr"); // skriver ut kontonamn
             }
+            Console.ReadKey();
         
             return userChoice;
+        }
+        static void Transfer(int from, int to)
+        {
+
+            
+            Console.ReadKey();
         }
     }
 }
