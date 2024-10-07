@@ -1,4 +1,4 @@
-﻿namespace Bankomaten
+namespace Bankomaten
 {
     internal class Program
     {
@@ -26,15 +26,6 @@
                     {
                         menuChoice = Menu(activeUser);
                     }
-                    
-                    //if (menuChoice == 4)
-                    //{
-                    //    break;
-                    //}
-                    //else
-                    //{
-                    //    continue;
-                    //}
                 }
             } while (activeLogin);
 
@@ -67,10 +58,10 @@
                         activeUser = (users[i][0]);
                         return activeUser;
                     }
-
                 }
                 count++;
             }
+            
             if (count == 3)
             {
                 Console.WriteLine("Du har överskridit dina 3 försök.");
@@ -90,10 +81,11 @@
             Console.WriteLine("2. Överför mellan konton"); // TransferBetweenAccounts method? return int?
             Console.WriteLine("3. Ta ut-/sätt in pengar"); // WithdrawalOrDeposit method? void?
             Console.WriteLine("4. Logga ut");              // Logout method? void?
+
             int menu = 0;
             try
             {
-                menu = Convert.ToInt32(Console.ReadLine());  // säkra kod! (System.FormatException: )
+                menu = Convert.ToInt32(Console.ReadLine());     // säkra kod! (System.FormatException: )
 
             }
             catch (System.FormatException)
@@ -111,6 +103,7 @@
                         Account(Convert.ToInt32(activeUser));
                         break;
                     case 2:
+                        menu = 2;
                         break;
                     case 3:
                         menu = 3;
@@ -120,10 +113,11 @@
                         break;
                 }
                 userChoice = false;
-            }
+          }
             return menu;
         }
-        static int Account(int userChoice)
+
+      static int Account(int userChoice)
         {
             int accountOne;
             int accountTwo;
@@ -167,7 +161,9 @@
                 default:
                     break;
             }
-            return userChoice;
+        
+            return menu;
         }
     }
+}
 }
