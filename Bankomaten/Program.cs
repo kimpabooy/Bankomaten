@@ -4,7 +4,6 @@ namespace Bankomaten
     {
         static void Main(string[] args)
         {
-            bool menuActive = false;
             bool activeLogin = true;
             string activeUser;
 
@@ -17,7 +16,8 @@ namespace Bankomaten
                 if (activeUser == "")
                 {
                     Console.WriteLine("Programmet stängs nu av");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(2500);
+                    break;
                 }
                 else
                 {
@@ -28,7 +28,6 @@ namespace Bankomaten
                     }
                 }
             } while (activeLogin);
-
         }
 
         static string Login()
@@ -59,14 +58,15 @@ namespace Bankomaten
                         return activeUser;
                     }
                 }
+                Console.Clear();
+                Console.WriteLine("Fel användare eller lösenord, försök igen \n");
                 count++;
             }
             
             if (count == 3)
             {
+                Console.Clear();
                 Console.WriteLine("Du har överskridit dina 3 försök.");
-                Console.ReadKey();
-
             }
             return activeUser;
 
