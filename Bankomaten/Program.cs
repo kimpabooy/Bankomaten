@@ -116,8 +116,7 @@ namespace Bankomaten
           }
             return menu;
         }
-
-      static int Account(int userChoice)
+        static int Account(int userChoice)
         {
             int accountOne;
             int accountTwo;
@@ -162,8 +161,7 @@ namespace Bankomaten
                     break;
             }
         
-            return menu;
+            return userChoice;
         }
     }
-}
 }
