@@ -4,7 +4,6 @@
     {
         static void Main(string[] args)
         {
-            bool menuActive = false;
             bool activeLogin = true;
             string activeUser;
 
@@ -17,7 +16,8 @@
                 if (activeUser == "")
                 {
                     Console.WriteLine("Programmet stängs nu av");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(2500);
+                    break;
                 }
                 else
                 {
@@ -26,18 +26,8 @@
                     {
                         menuChoice = Menu(activeUser);
                     }
-                    
-                    //if (menuChoice == 4)
-                    //{
-                    //    break;
-                    //}
-                    //else
-                    //{
-                    //    continue;
-                    //}
                 }
             } while (activeLogin);
-
         }
 
         static string Login()
@@ -69,13 +59,14 @@
                     }
 
                 }
+                Console.Clear();
+                Console.WriteLine("Fel användare eller lösenord, försök igen \n");
                 count++;
             }
             if (count == 3)
             {
+                Console.Clear();
                 Console.WriteLine("Du har överskridit dina 3 försök.");
-                Console.ReadKey();
-
             }
             return activeUser;
 
