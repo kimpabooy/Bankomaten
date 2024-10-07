@@ -135,12 +135,14 @@ namespace Bankomaten
                     accountOne = 24000;
                     accountTwo = 580;
                     Console.WriteLine($" Here are your Accounts\n #1 balance is: {accountOne}$\n #2 balance is: {accountTwo}$");
+                    Console.ReadKey();
                     break;
                 case 3:
                     accountOne = 9500;
                     accountTwo = 580;
                     accountThree = 580;
                     Console.WriteLine($"Your Account balance is: #1 balance is: {accountOne}$ #2 balance is: {accountTwo}$ #3 balance is: {accountThree}$ ");
+                    Console.ReadKey();
                     break;
                 case 4:
                     accountOne = 20000;
@@ -148,6 +150,7 @@ namespace Bankomaten
                     accountThree = 580;
                     accountFour = 580;
                     Console.WriteLine($"Your Account balance is: #1 balance is: {accountOne}$ #2 balance is: {accountTwo}$ #3 balance is: {accountThree}$ #4 balance is: {accountFour}$");
+                    Console.ReadKey();
                     break;
                 case 5:
                     accountOne = 30000;
@@ -156,6 +159,7 @@ namespace Bankomaten
                     accountFour = 30000;
                     accountFive = 30000;
                     Console.WriteLine($"Your Account balance is: #1 balance is: {accountOne}$ #2 balance is: {accountTwo}$ #3 balance is: {accountThree}$ #4 balance is: {accountFour}$ #5 balance is: {accountFive}$");
+                    Console.ReadKey();
                     break;
                 default:
                     break;
