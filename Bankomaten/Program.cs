@@ -12,7 +12,7 @@ namespace Bankomaten
             do
             {
                 activeUser = Login();
-
+                // Om användaren är tom ( "" ) efter 3 försök så stängs programmet av.
                 if (activeUser == "")
                 {
                     Console.WriteLine("Programmet stängs nu av");
@@ -21,6 +21,7 @@ namespace Bankomaten
                 }
                 else
                 {
+                    // Kollar om användaren vill logga ut ( 4 ) annars fortsätter att köra Menu();
                     int menuChoice = 0;
                     while (menuChoice != 4)
                     {
@@ -77,9 +78,9 @@ namespace Bankomaten
             Console.Clear();
             Console.WriteLine("Vänligen välj önskad metod\n");
 
-            Console.WriteLine("1. Se ditt konto(n)/saldo");  // Account method? return int?
+            Console.WriteLine("1. Se dina konton och saldo");  // Account method? return int?
             Console.WriteLine("2. Överför mellan konton"); // TransferBetweenAccounts method? return int?
-            Console.WriteLine("3. Ta ut-/sätt in pengar"); // WithdrawalOrDeposit method? void?
+            Console.WriteLine("3. Ta ut pengar"); // WithdrawalOrDeposit method? void?
             Console.WriteLine("4. Logga ut");              // Logout method? void?
 
             int menu = 0;
