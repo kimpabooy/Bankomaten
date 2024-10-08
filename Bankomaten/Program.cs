@@ -117,7 +117,7 @@ namespace Bankomaten
                         Transfer(Convert.ToInt32(userIndex));
                         break;
                     case 3:
-                        menu = 3;
+                        Withdraw(Convert.ToInt32(userIndex));
                         break;
                     case 4:
                         menu = 4;
@@ -193,6 +193,39 @@ namespace Bankomaten
                         break;
                 }
             }
+        }
+        static void Withdraw(int userIndex)
+        {
+            
+            decimal moneyWithraw = 0;
+            int count = 1;
+            userIndex -= 1;
+            Console.WriteLine("\nHär är dina konton ");
+            for (int i = 0; i < userAccount[userIndex].Length; i++)
+            {
+                Console.WriteLine($" {count}. {accountName[i]} {userAccount[userIndex][i]:C}");
+                count++;
+            }
+            Console.WriteLine("\n(Välj med en siffra)");
+            Console.WriteLine("Vilket konto vill du ta ut pengar ifrån? \n");
+            int fromAccount = Convert.ToInt32(Console.ReadLine());
+            
+            Console.WriteLine($"Hur mycket pengar vill du ta ut ifrån ditt {accountName[fromAccount -1]}: ");
+            moneyWithraw = Convert.ToDecimal(Console.ReadLine());
+            
+
+            if (moneyWithraw <= userAccount[userIndex][fromAccount -1])
+            {
+                //userIndex += 1;
+                userAccount[userIndex][fromAccount -1] -= moneyWithraw;
+                Console.WriteLine($"\n Du har tagit ut {moneyWithraw:C} ifrån ditt {accountName[fromAccount - 1]} konto. ");
+            }
+            else
+            {
+                Console.WriteLine("Du har inte tillräckligt mycket pengar på kontot");
+            }
+
+            Console.ReadKey();
         }
     }
 }
