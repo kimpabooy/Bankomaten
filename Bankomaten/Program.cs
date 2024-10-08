@@ -194,12 +194,36 @@ namespace Bankomaten
                 }
             }
         }
-        static void Withdraw(int userIndex)
+        static void Withdraw(int userIndex )
         {
             
+            bool pinOk = false;
+            int pinCount = 0;
+            
+            do
+            {
+                Console.Clear();
+                Console.Write("Skriv in ditt lösenord: ");
+                
+                string userPassword = HidePassword();
+                userIndex -= 1;
+
+                for (int i = 0; i < user.Length -1; i++)
+                {
+                    if (userPassword == user[i][2])
+                    {
+                        pinOk = true;
+                        break;
+                    }
+                }
+                pinCount++;
+
+            } while (!pinOk || pinCount == 3);
+
             decimal moneyWithraw = 0;
             int count = 1;
-            userIndex -= 1;
+            Console.Clear();
+
             Console.WriteLine("\nHär är dina konton ");
             for (int i = 0; i < userAccount[userIndex].Length; i++)
             {
