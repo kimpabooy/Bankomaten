@@ -212,7 +212,8 @@ namespace Bankomaten
         {
             
             bool pinOk = false;
-            int pinCount = 0;
+            int pinCount = 1;
+            userIndex -= 1;
             // Asking user to authenticate with there password.
             do
             {
@@ -220,8 +221,7 @@ namespace Bankomaten
                 Console.Write("Skriv in ditt lösenord: ");
                 
                 string userPassword = HidePassword();
-                userIndex -= 1;
-
+                
                 for (int i = 0; i < user.Length; i++)
                 {
                     if (userPassword == user[i][2])
@@ -229,10 +229,16 @@ namespace Bankomaten
                         pinOk = true;
                         break;
                     }
+                    else if (pinCount == 3)
+                    {
+                        Console.WriteLine("\nFör många försök, återvänder till menyn");
+                        Thread.Sleep(2000);
+                        return;
+                    }
                 }
                 pinCount++;
 
-            } while (!pinOk || pinCount == 3); // Checks untill the password is correct OR if user tried more then 3 times.
+            } while (!pinOk); // Checks untill the password is correct OR if user tried more then 3 times.
 
             decimal moneyWithraw = 0;
             int count = 1;
