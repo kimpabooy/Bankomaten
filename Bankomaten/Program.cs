@@ -58,7 +58,8 @@ namespace Bankomaten
                 Console.Write("Användarnamn: ");
                 string userId = Console.ReadLine().ToLower();
                 Console.Write("Lösenord: ");
-                string userPassword = Console.ReadLine();
+                
+                string userPassword = HidePassword();
 
                 for (int i = 0; i < user.Length; i++)
                 {
@@ -166,6 +167,32 @@ namespace Bankomaten
             Console.WriteLine($"Ditt{accountName[toAccount -1]} har nu {userAccount[userIndex][toAccount -1]}kr");
            
             Console.ReadKey();
+        }
+        static string HidePassword()
+        {
+            string password = "";
+            while (true)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                switch (key.Key)
+                {
+                    case ConsoleKey.Escape:
+                        return "";
+                    case ConsoleKey.Enter:
+                        return password;
+                    case ConsoleKey.Backspace:
+                        if (password.Length > 0)
+                        {
+                            password = password.Substring(0, (password.Length - 1));
+                            Console.Write("\b \b");
+                        }
+                        break;
+                    default:
+                        password += key.KeyChar;
+                        Console.Write("*");
+                        break;
+                }
+            }
         }
     }
 }
