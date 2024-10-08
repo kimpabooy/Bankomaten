@@ -9,26 +9,26 @@ namespace Bankomaten
                                      ["4","yvonne","670719"],
                                      ["5","niklas","920304"]};
 
-        static string[][] userAccount = {   ["28000"],// [0,0]
-                                            ["20000","25000"],// [1,0][1,1]
-                                            ["12000","14000","34000"], // [2,0][2,1][2,2]
-                                            ["11000","34000","28000","205000"],// [3,0][3,1][3,2][3,3]
-                                            ["5000","40000","13000","60000","23000"]}; // [4,0][4,1][4,2][4,3][4,4]
+        static decimal[][] userAccount = {  [28000m],// [0,0]
+                                            [20000m, 25000m],// [1,0][1,1]
+                                            [12000m, 14000m, 34000m], // [2,0][2,1][2,2]
+                                            [11000m, 34000m, 28000m, 205000m],// [3,0][3,1][3,2][3,3]
+                                            [5000m, 40000m, 13000m, 60000m, 23000m]}; // [4,0][4,1][4,2][4,3][4,4]
 
         static string[] accountName = { "Privatkonto","sparkonto", "semesterkonto", "pensionkonto", "nöje"};
 
         static void Main(string[] args)
         {
             bool activeLogin = true;
-            string activeUser;
+            string userIndex;
 
             Console.WriteLine("Välkommen till DinBank \n");
 
             do
             {
-                activeUser = Login();
+                userIndex = Login();
                 // Om användaren är tom ( "" ) efter 3 försök så stängs programmet av.
-                if (activeUser == "")
+                if (userIndex == "")
                 {
                     Console.WriteLine("Programmet stängs nu av");
                     Thread.Sleep(2500);
@@ -40,7 +40,7 @@ namespace Bankomaten
                     int menuChoice = 0;
                     while (menuChoice != 4)
                     {
-                        menuChoice = Menu(activeUser);
+                        menuChoice = Menu(userIndex);
                     }
                 }
             } while (activeLogin);
@@ -81,7 +81,7 @@ namespace Bankomaten
             return activeUser;
 
         }
-        static int Menu(string activeUser)
+        static int Menu(string userIndex)
         {
 
             Console.Clear();
@@ -110,10 +110,10 @@ namespace Bankomaten
                 switch (menu)
                 {
                     case 1:
-                        Account(Convert.ToInt32(activeUser));
+                        Account(Convert.ToInt32(userIndex));
                         break;
                     case 2:
-                        //Transfer();
+                        Transfer(Convert.ToInt32(userIndex));
                         break;
                     case 3:
                         menu = 3;
@@ -126,22 +126,44 @@ namespace Bankomaten
           }
             return menu;
         }
-        static int Account(int userChoice)
+        static int Account(int userIndex)
         {
-            Console.WriteLine("Here are your accounts: ");
-            userChoice = userChoice - 1; // användare
-            for (int i = 0; i < userAccount[userChoice].Length; i++)
+            Console.WriteLine("Dina konton: ");
+            userIndex = userIndex - 1; // användare
+            for (int i = 0; i < userAccount[userIndex].Length; i++)
             {
-                Console.WriteLine($"{accountName[i]}: {userAccount[userChoice][i]}kr"); // skriver ut kontonamn
+                Console.WriteLine($"{accountName[i]}: {userAccount[userIndex][i]}kr"); // skriver ut kontonamn
             }
             Console.ReadKey();
         
-            return userChoice;
+            return userIndex;
         }
-        static void Transfer(int from, int to)
+        static void Transfer(int userIndex)
         {
+            int count = 1;
+            userIndex = userIndex - 1;
+            for (int i = 0; i < userAccount[userIndex].Length; i++)
+            {
+                Console.WriteLine($" {count}. {accountName[i]} {userAccount[userIndex][i]}");
+                count++;
+            }
+            Console.WriteLine("\n(Välj med en siffra)");
+            Console.WriteLine("Vilket konto vill du flytta ifrån?\n");
+            int fromAccount = Convert.ToInt32(Console.ReadLine());
 
+            Console.WriteLine("Vilket konto vill du flytta till?\n");
+            int toAccount = Convert.ToInt32(Console.ReadLine());
             
+            // debugging - remove when done
+            Console.WriteLine($"{userAccount[userIndex][fromAccount -1]}, {userAccount[userIndex][toAccount -1]}");
+
+            Console.WriteLine($"Hur mycket pengar vill du flytta ifrån {accountName[fromAccount -1]}t till {accountName[toAccount -1]}t ");
+            decimal transferAmmount = Convert.ToDecimal(Console.ReadLine());
+
+            userAccount[userIndex][fromAccount -1] -= transferAmmount;
+            userAccount[userIndex][toAccount -1] += transferAmmount;
+            Console.WriteLine(userAccount[userIndex][fromAccount -1]);
+            Console.WriteLine(userAccount[userIndex][toAccount -1]);
             Console.ReadKey();
         }
     }
