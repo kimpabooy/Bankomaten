@@ -144,7 +144,7 @@ namespace Bankomaten
             userIndex = userIndex - 1;
             for (int i = 0; i < userAccount[userIndex].Length; i++)
             {
-                Console.WriteLine($" {count}. {accountName[i]} {userAccount[userIndex][i]}");
+                Console.WriteLine($" {count}. {accountName[i]} {userAccount[userIndex][i]}kr");
                 count++;
             }
             Console.WriteLine("\n(Välj med en siffra)");
@@ -162,8 +162,9 @@ namespace Bankomaten
 
             userAccount[userIndex][fromAccount -1] -= transferAmmount;
             userAccount[userIndex][toAccount -1] += transferAmmount;
-            Console.WriteLine(userAccount[userIndex][fromAccount -1]);
-            Console.WriteLine(userAccount[userIndex][toAccount -1]);
+            Console.WriteLine($"Ditt{accountName[fromAccount -1]} har nu {userAccount[userIndex][fromAccount -1]}kr");
+            Console.WriteLine($"Ditt{accountName[toAccount -1]} har nu {userAccount[userIndex][toAccount -1]}kr");
+           
             Console.ReadKey();
         }
     }
