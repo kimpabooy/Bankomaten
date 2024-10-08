@@ -120,11 +120,13 @@ namespace Bankomaten
                         Withdraw(Convert.ToInt32(userIndex));
                         break;
                     case 4:
-                        menu = 4;
+                        Console.WriteLine("\nDu loggas nu ut...\n");
+                        Thread.Sleep(2000);
+                        Console.Clear();
                         break;
                 }
                 userChoice = false;
-          }
+            }
             return menu;
         }
         static int Account(int userIndex)
@@ -135,8 +137,9 @@ namespace Bankomaten
             {
                 Console.WriteLine($"{accountName[i]}: {userAccount[userIndex][i]:C}"); // skriver ut kontonamn
             }
+            Console.WriteLine("\nTryck på valfri tangent för att fortsätta");
             Console.ReadKey();
-        
+
             return userIndex;
         }
         static void Transfer(int userIndex)
@@ -163,9 +166,10 @@ namespace Bankomaten
 
             userAccount[userIndex][fromAccount -1] -= transferAmmount;
             userAccount[userIndex][toAccount -1] += transferAmmount;
-            Console.WriteLine($"Ditt{accountName[fromAccount -1]} har nu {userAccount[userIndex][fromAccount -1]:C}");
-            Console.WriteLine($"Ditt{accountName[toAccount -1]} har nu {userAccount[userIndex][toAccount -1]:C}");
-           
+            Console.WriteLine($"Ditt {accountName[fromAccount -1]} har nu {userAccount[userIndex][fromAccount -1]:C}");
+            Console.WriteLine($"Ditt {accountName[toAccount -1]} har nu {userAccount[userIndex][toAccount -1]:C}");
+
+            Console.WriteLine("\nTryck på valfri tangent för att fortsätta");
             Console.ReadKey();
         }
         static string HidePassword()
@@ -240,15 +244,15 @@ namespace Bankomaten
 
             if (moneyWithraw <= userAccount[userIndex][fromAccount -1])
             {
-                //userIndex += 1;
                 userAccount[userIndex][fromAccount -1] -= moneyWithraw;
-                Console.WriteLine($"\n Du har tagit ut {moneyWithraw:C} ifrån ditt {accountName[fromAccount - 1]} konto. ");
+                Console.WriteLine($"\nDu har tagit ut {moneyWithraw:C} ifrån ditt {accountName[fromAccount - 1]} konto. ");
             }
             else
             {
                 Console.WriteLine("Du har inte tillräckligt mycket pengar på kontot");
             }
 
+            Console.WriteLine("\nTryck på valfri tangent för att fortsätta");
             Console.ReadKey();
         }
     }
