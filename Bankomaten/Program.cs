@@ -2,32 +2,33 @@ namespace Bankomaten
 {
     internal class Program
     {
-
+        // Accounts [ID, Username, Password]
         static string[][] user = {   ["1","kim","921027"],
                                      ["2","håkan","670111"],
                                      ["3","alexander","951227"],
                                      ["4","yvonne","670719"],
                                      ["5","niklas","920304"]};
-
-        static decimal[][] userAccount = {  [28000m],// [0,0]
-                                            [20000m, 25000m],// [1,0][1,1]
-                                            [12000m, 14000m, 34000m], // [2,0][2,1][2,2]
-                                            [11000m, 34000m, 28000m, 205000m],// [3,0][3,1][3,2][3,3]
-                                            [5000m, 40000m, 13000m, 60000m, 23000m]}; // [4,0][4,1][4,2][4,3][4,4]
-
-        static string[] accountName = { "Privatkonto","sparkonto", "semesterkonto", "pensionkonto", "nöje"};
+        // Account Balances
+        static decimal[][] userAccount = {  [28000m],
+                                            [20000m, 25000m],
+                                            [12000m, 14000m, 34000m],
+                                            [11000m, 34000m, 28000m, 205000m],
+                                            [5000m, 40000m, 13000m, 60000m, 23000m]};
+        // Account Names
+        static string[] userAccountName = { "Privatkonto","sparkonto", "semesterkonto", "pensionkonto", "nöje"};
 
         static void Main(string[] args)
         {
-            bool activeLogin = true;
-            string userIndex;
+            bool activeLogin = true; // Tracking if user is logged in or not.
+            string userIndex;        // Tracking the logged in user's Index.
 
             Console.WriteLine("Välkommen till DinBank \n");
 
             do
             {
                 userIndex = Login();
-                // Om användaren är tom ( "" ) efter 3 försök så stängs programmet av.
+
+                // If Login() returns an empty string.
                 if (userIndex == "")
                 {
                     Console.WriteLine("Programmet stängs nu av");
@@ -36,7 +37,7 @@ namespace Bankomaten
                 }
                 else
                 {
-                    // Kollar om användaren vill logga ut ( 4 ) annars fortsätter att köra Menu();
+                    // Show menu until user decides to log out.
                     int menuChoice = 0;
                     while (menuChoice != 4)
                     {
@@ -46,10 +47,12 @@ namespace Bankomaten
             } while (activeLogin);
         }
 
+        // Logs the user in by compairing the username and password with user array and return the user index,
+        // or an empty string after 3 failed attempt.
         static string Login()
         {
-            int count = 0;
-            string activeUser = "";
+            int count = 0;  // Keeping track of login attempts.
+            string activeUser = ""; // Stores the index of the logged in user.
 
             while (count < 3)
             {
@@ -59,14 +62,15 @@ namespace Bankomaten
                 string userId = Console.ReadLine().ToLower();
                 Console.Write("Lösenord: ");
                 
-                string userPassword = HidePassword();
+                string userPassword = HidePassword(); // Hides the password input on the screen.
 
+                // Compairs if the input of username and password is correkt in user array.
                 for (int i = 0; i < user.Length; i++)
                 {
                     if (userId == user[i][1] && userPassword == user[i][2])
                     {
                         activeUser = (user[i][0]);
-                        return activeUser;
+                        return activeUser; // returns user index.
                     }
                 }
                 Console.Clear();
@@ -79,32 +83,31 @@ namespace Bankomaten
                 Console.Clear();
                 Console.WriteLine("Du har överskridit dina 3 försök.");
             }
-            return activeUser;
-
+            return activeUser; // Return empty string if there is no mach of username and password in user array.
         }
+
+        // Runs the Menu for the user.
         static int Menu(string userIndex)
         {
-
             Console.Clear();
             Console.WriteLine("Vänligen välj önskad metod\n");
 
-            Console.WriteLine("1. Se dina konton och saldo");  // Account method? return int?
-            Console.WriteLine("2. Överför mellan konton"); // TransferBetweenAccounts method? return int?
-            Console.WriteLine("3. Ta ut pengar"); // WithdrawalOrDeposit method? void?
-            Console.WriteLine("4. Logga ut");              // Logout method? void?
+            Console.WriteLine("1. Se dina konton och saldo");
+            Console.WriteLine("2. Överför mellan konton");
+            Console.WriteLine("3. Ta ut pengar");
+            Console.WriteLine("4. Logga ut");
 
             int menu = 0;
             try
             {
-                menu = Convert.ToInt32(Console.ReadLine());     // säkra kod! (System.FormatException: )
-
+                menu = Convert.ToInt32(Console.ReadLine()); // Trying to convert the input from the user.
             }
             catch (System.FormatException)
             {
-
-
+                // Catching the exception and then does nothing.
             }
 
+            // Runs the method corresponding to the menu choice.
             bool userChoice = true;
             while (userChoice)
             {
@@ -129,26 +132,30 @@ namespace Bankomaten
             }
             return menu;
         }
+
+        // Displays the user's accounts and their balance.
         static int Account(int userIndex)
         {
             Console.WriteLine("Dina konton: ");
-            userIndex = userIndex - 1; // användare
-            for (int i = 0; i < userAccount[userIndex].Length; i++)
+            userIndex = userIndex - 1;
+            for (int i = 0; i < userAccount[userIndex].Length; i++) // Goes through the userAccount array on indexlocation of userIndex.
             {
-                Console.WriteLine($"{accountName[i]}: {userAccount[userIndex][i]:C}"); // skriver ut kontonamn
+                Console.WriteLine($"{userAccountName[i]}: {userAccount[userIndex][i]:C}"); // Dsiplaying the logged in users account names and balance.
             }
             Console.WriteLine("\nTryck på valfri tangent för att fortsätta");
             Console.ReadKey();
 
             return userIndex;
         }
+
+        // Method that transfer money between the users accounts.
         static void Transfer(int userIndex)
         {
-            int count = 1;
-            userIndex = userIndex - 1;
+            int count = 1; // keeping track of number of accounts.
+            userIndex -= 1;
             for (int i = 0; i < userAccount[userIndex].Length; i++)
             {
-                Console.WriteLine($" {count}. {accountName[i]} {userAccount[userIndex][i]:C}");
+                Console.WriteLine($" {count}. {userAccountName[i]} {userAccount[userIndex][i]:C}"); // Displaying the logged in user's accounts and balance
                 count++;
             }
             Console.WriteLine("\n(Välj med en siffra)");
@@ -158,52 +165,55 @@ namespace Bankomaten
             Console.WriteLine("Vilket konto vill du flytta till?\n");
             int toAccount = Convert.ToInt32(Console.ReadLine());
             
-            // debugging - remove when done
-            Console.WriteLine($"{userAccount[userIndex][fromAccount -1]:C}, {userAccount[userIndex][toAccount -1]:C}");
-
-            Console.WriteLine($"Hur mycket pengar vill du flytta ifrån {accountName[fromAccount -1]}t till {accountName[toAccount -1]}t ");
+            // Asking the user how much to transfer.
+            Console.WriteLine($"Hur mycket pengar vill du flytta ifrån {userAccountName[fromAccount -1]}t till {userAccountName[toAccount -1]}t ");
             decimal transferAmmount = Convert.ToDecimal(Console.ReadLine());
 
+            // Gives new values to the user accounts and displaying from witch account the user transfered money from/to.
             userAccount[userIndex][fromAccount -1] -= transferAmmount;
             userAccount[userIndex][toAccount -1] += transferAmmount;
-            Console.WriteLine($"Ditt {accountName[fromAccount -1]} har nu {userAccount[userIndex][fromAccount -1]:C}");
-            Console.WriteLine($"Ditt {accountName[toAccount -1]} har nu {userAccount[userIndex][toAccount -1]:C}");
+            Console.WriteLine($"Ditt {userAccountName[fromAccount -1]} har nu {userAccount[userIndex][fromAccount -1]:C}");
+            Console.WriteLine($"Ditt {userAccountName[toAccount -1]} har nu {userAccount[userIndex][toAccount -1]:C}");
 
             Console.WriteLine("\nTryck på valfri tangent för att fortsätta");
             Console.ReadKey();
         }
+
+        // Hides the input password when loggin in.
         static string HidePassword()
         {
             string password = "";
             while (true)
             {
-                ConsoleKeyInfo key = Console.ReadKey(true);
+                ConsoleKeyInfo key = Console.ReadKey(true); // saves the keypress
                 switch (key.Key)
                 {
-                    case ConsoleKey.Escape:
+                    case ConsoleKey.Escape: // If key "Escape", Return nothing.
                         return "";
-                    case ConsoleKey.Enter:
+                    case ConsoleKey.Enter: // If key "Enter", Return current password.
                         return password;
-                    case ConsoleKey.Backspace:
+                    case ConsoleKey.Backspace: // If key "backspace", checks if there is anything to remove and removes last index.
                         if (password.Length > 0)
-                        {
+                        { 
                             password = password.Substring(0, (password.Length - 1));
                             Console.Write("\b \b");
                         }
                         break;
                     default:
-                        password += key.KeyChar;
+                        password += key.KeyChar; // Adds the keypress/input to password but displaying "*" insted.
                         Console.Write("*");
                         break;
                 }
             }
         }
+
+        // Withdraws balance between users accounts.
         static void Withdraw(int userIndex )
         {
             
             bool pinOk = false;
             int pinCount = 0;
-            
+            // Asking user to authenticate with there password.
             do
             {
                 Console.Clear();
@@ -222,7 +232,7 @@ namespace Bankomaten
                 }
                 pinCount++;
 
-            } while (!pinOk || pinCount == 3);
+            } while (!pinOk || pinCount == 3); // Checks untill the password is correct OR if user tried more then 3 times.
 
             decimal moneyWithraw = 0;
             int count = 1;
@@ -231,25 +241,26 @@ namespace Bankomaten
             Console.WriteLine("\nHär är dina konton ");
             for (int i = 0; i < userAccount[userIndex].Length; i++)
             {
-                Console.WriteLine($" {count}. {accountName[i]} {userAccount[userIndex][i]:C}");
+                Console.WriteLine($" {count}. {userAccountName[i]} {userAccount[userIndex][i]:C}"); // Displays the accounts.
                 count++;
             }
             Console.WriteLine("\n(Välj med en siffra)");
             Console.WriteLine("Vilket konto vill du ta ut pengar ifrån? \n");
             int fromAccount = Convert.ToInt32(Console.ReadLine());
             
-            Console.WriteLine($"Hur mycket pengar vill du ta ut ifrån ditt {accountName[fromAccount -1]}: ");
+            Console.WriteLine($"Hur mycket pengar vill du ta ut ifrån ditt {userAccountName[fromAccount -1]}: ");
             moneyWithraw = Convert.ToDecimal(Console.ReadLine());
             
-
+            // Checks if the withdraw value is less or equal to the balance on the account.
             if (moneyWithraw <= userAccount[userIndex][fromAccount -1])
             {
+                // Withdraw money from selected account.
                 userAccount[userIndex][fromAccount -1] -= moneyWithraw;
-                Console.WriteLine($"\nDu har tagit ut {moneyWithraw:C} ifrån ditt {accountName[fromAccount - 1]} konto. ");
+                Console.WriteLine($"\nDu har tagit ut {moneyWithraw:C} ifrån ditt {userAccountName[fromAccount - 1]} konto. "); 
             }
             else
             {
-                Console.WriteLine("Du har inte tillräckligt mycket pengar på kontot");
+                Console.WriteLine("Du har inte tillräckligt mycket pengar på kontot"); // if insufficent funds
             }
 
             Console.WriteLine("\nTryck på valfri tangent för att fortsätta");
