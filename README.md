@@ -45,4 +45,4 @@
 > - [x] Efter detta måste användaren skriva in sin pinkod för att bekräfta att de vill ta ut pengar.
 > - [x] Lägg till ett felmeddelande om användaren försöker ta ut mer pengar än vad som finns på kontot.
 > - [x] Pengarna ska sedan tas bort från det konto som valdes.
-> - [ ] Sist av allt ska systemet skriva ut det nya saldot på det kontot.
+> - [x] Sist av allt ska systemet skriva ut det nya saldot på det kontot.
