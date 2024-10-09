@@ -210,7 +210,6 @@ namespace Bankomaten
         // Withdraws balance between users accounts.
         static void Withdraw(int userIndex )
         {
-            
             bool pinOk = false;
             int pinCount = 1;
             userIndex -= 1;
@@ -226,8 +225,34 @@ namespace Bankomaten
                 {
                     if (userPassword == user[i][2])
                     {
-                        pinOk = true;
-                        break;
+                        decimal moneyWithraw = 0;
+                        int count = 1;
+                        Console.Clear();
+
+                        Console.WriteLine("\nHär är dina konton ");
+                        for (int j = 0; j < userAccount[userIndex].Length; j++)
+                        {
+                            Console.WriteLine($" {count}. {userAccountName[j]} {userAccount[userIndex][j]:C}"); // Displays the accounts.
+                            count++;
+                        }
+                        Console.WriteLine("\n(Välj med en siffra)");
+                        Console.WriteLine("Vilket konto vill du ta ut pengar ifrån? \n");
+                        int fromAccount = Convert.ToInt32(Console.ReadLine());
+
+                        Console.WriteLine($"Hur mycket pengar vill du ta ut ifrån ditt {userAccountName[fromAccount - 1]}: ");
+                        moneyWithraw = Convert.ToDecimal(Console.ReadLine());
+
+                        // Checks if the withdraw value is less or equal to the balance on the account.
+                        if (moneyWithraw <= userAccount[userIndex][fromAccount - 1])
+                        {
+                            // Withdraw money from selected account.
+                            userAccount[userIndex][fromAccount - 1] -= moneyWithraw;
+                            Console.WriteLine($"\nDu har tagit ut {moneyWithraw:C} ifrån ditt {userAccountName[fromAccount - 1]} konto. ");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Du har inte tillräckligt mycket pengar på kontot"); // if insufficent funds
+                        }
                     }
                     else if (pinCount == 3)
                     {
@@ -239,35 +264,6 @@ namespace Bankomaten
                 pinCount++;
 
             } while (!pinOk); // Checks untill the password is correct OR if user tried more then 3 times.
-
-            decimal moneyWithraw = 0;
-            int count = 1;
-            Console.Clear();
-
-            Console.WriteLine("\nHär är dina konton ");
-            for (int i = 0; i < userAccount[userIndex].Length; i++)
-            {
-                Console.WriteLine($" {count}. {userAccountName[i]} {userAccount[userIndex][i]:C}"); // Displays the accounts.
-                count++;
-            }
-            Console.WriteLine("\n(Välj med en siffra)");
-            Console.WriteLine("Vilket konto vill du ta ut pengar ifrån? \n");
-            int fromAccount = Convert.ToInt32(Console.ReadLine());
-            
-            Console.WriteLine($"Hur mycket pengar vill du ta ut ifrån ditt {userAccountName[fromAccount -1]}: ");
-            moneyWithraw = Convert.ToDecimal(Console.ReadLine());
-            
-            // Checks if the withdraw value is less or equal to the balance on the account.
-            if (moneyWithraw <= userAccount[userIndex][fromAccount -1])
-            {
-                // Withdraw money from selected account.
-                userAccount[userIndex][fromAccount -1] -= moneyWithraw;
-                Console.WriteLine($"\nDu har tagit ut {moneyWithraw:C} ifrån ditt {userAccountName[fromAccount - 1]} konto. "); 
-            }
-            else
-            {
-                Console.WriteLine("Du har inte tillräckligt mycket pengar på kontot"); // if insufficent funds
-            }
 
             Console.WriteLine("\nTryck på valfri tangent för att fortsätta");
             Console.ReadKey();
