@@ -159,18 +159,50 @@ namespace Bankomaten
         static void Transfer(int userIndex)
         {
             int count = 1; // keeping track of number of accounts.
-            userIndex -= 1;
-            for (int i = 0; i < userAccount[userIndex].Length; i++)
-            {
-                Console.WriteLine($" {count}. {userAccountName[i]} {userAccount[userIndex][i]:C}"); // Displaying the logged in user's accounts and balance
-                count++;
-            }
-            Console.WriteLine("\n(Välj med en siffra)");
-            Console.WriteLine("Vilket konto vill du flytta ifrån?\n");
-            int fromAccount = Convert.ToInt32(Console.ReadLine());
+            int fromAccount = 0;
+            int toAccount = 0;
 
-            Console.WriteLine("Vilket konto vill du flytta till?\n");
-            int toAccount = Convert.ToInt32(Console.ReadLine());
+            bool rightInput = false;
+
+            userIndex -= 1;
+           
+            do
+            {
+                // Displaying users account again if any exception would occur.
+                for (int i = 0; i < userAccount[userIndex].Length; i++)
+                {
+                    Console.WriteLine($" {count}. {userAccountName[i]} {userAccount[userIndex][i]:C}");
+                    count++;
+                }
+                try
+                {   
+                    Console.WriteLine("\n(Välj med en siffra)");
+                    Console.WriteLine("Vilket konto vill du flytta ifrån?\n");
+                    fromAccount = Convert.ToInt32(Console.ReadLine());
+
+                    Console.WriteLine("Vilket konto vill du flytta till?\n");
+                    toAccount = Convert.ToInt32(Console.ReadLine());
+                    rightInput = true;
+                }
+                catch (System.FormatException)
+                {
+                    Console.WriteLine("Ogiltlig input, försök igen");
+                    count--;
+                    rightInput = false;
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+               
+                // Checks if the accounts exsists            
+                if (rightInput && 
+                    (fromAccount < 1 || fromAccount > userAccount[userIndex].Length) || 
+                    (toAccount < 1 || toAccount > userAccount[userIndex].Length))
+                {
+                    Console.WriteLine("Något gick fel. Har du angätt rätt konton?");
+                    rightInput = false;   
+                }
+
+            } while (!rightInput);
             
             // Asking the user how much to transfer.
             Console.WriteLine($"Hur mycket pengar vill du flytta ifrån {userAccountName[fromAccount -1]}t till {userAccountName[toAccount -1]}t ");
