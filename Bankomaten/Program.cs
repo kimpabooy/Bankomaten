@@ -89,28 +89,28 @@ namespace Bankomaten
         // Runs the Menu for the user.
         static int Menu(string userIndex)
         {
-            Console.Clear();
-            Console.WriteLine("Vänligen välj önskad metod\n");
-
-            Console.WriteLine("1. Se dina konton och saldo");
-            Console.WriteLine("2. Överför mellan konton");
-            Console.WriteLine("3. Ta ut pengar");
-            Console.WriteLine("4. Logga ut");
-
-            int menu = 0;
-            try
-            {
-                menu = Convert.ToInt32(Console.ReadLine()); // Trying to convert the input from the user.
-            }
-            catch (System.FormatException)
-            {
-                // Catching the exception and then does nothing.
-            }
-
             // Runs the method corresponding to the menu choice.
             bool userChoice = true;
+            int menu = 0;
             while (userChoice)
             {
+                Console.Clear();
+                Console.WriteLine("Vänligen välj önskad metod\n");
+
+                Console.WriteLine("1. Se dina konton och saldo");
+                Console.WriteLine("2. Överför mellan konton");
+                Console.WriteLine("3. Ta ut pengar");
+                Console.WriteLine("4. Logga ut");
+
+                try
+                {
+                    menu = Convert.ToInt32(Console.ReadLine()); // Trying to convert the input from the user.
+                }
+                catch (System.FormatException)
+                {
+                    // Catching the exception and then does nothing.
+                }
+
                 switch (menu)
                 {
                     case 1:
@@ -129,6 +129,13 @@ namespace Bankomaten
                         break;
                 }
                 userChoice = false;
+                if (menu < 1 || menu > 4 )
+                {
+                    Console.WriteLine("Ogiltligt val");
+                    Console.ReadKey();
+                    break;
+                }
+               
             }
             return menu;
         }
