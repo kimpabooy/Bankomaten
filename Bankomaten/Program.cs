@@ -318,7 +318,7 @@ namespace Bankomaten
 
                         
                         // Checks if the withdraw value is less or equal to the balance on the account.
-                        if (moneyWithraw <= userAccount[userIndex][fromAccount - 1])
+                        if (moneyWithraw > 0 && moneyWithraw <= userAccount[userIndex][fromAccount - 1])
                         {
                             // Withdraw money from selected account.
                             userAccount[userIndex][fromAccount - 1] -= moneyWithraw;
@@ -326,6 +326,12 @@ namespace Bankomaten
                             Console.WriteLine("\nTryck på valfri tangent för att komma till menyn");
                             Console.ReadKey();
                             return;
+                        }
+                        else if (moneyWithraw < 1)
+                        {
+                            Console.WriteLine("ogiltligt uttag");
+                            Console.ReadKey();
+                            i--;
                         }
                         else
                         {
