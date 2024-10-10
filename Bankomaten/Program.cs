@@ -158,7 +158,7 @@ namespace Bankomaten
         // Method that transfer money between the users accounts.
         static void Transfer(int userIndex)
         {
-            int count = 1; // keeping track of number of accounts.
+            int count = 0; // keeping track of number of accounts.
             int fromAccount = 0;
             int toAccount = 0;
 
@@ -168,6 +168,7 @@ namespace Bankomaten
            
             do
             {
+                count = 1;
                 // Displaying users account again if any exception would occur.
                 for (int i = 0; i < userAccount[userIndex].Length; i++)
                 {
@@ -193,12 +194,12 @@ namespace Bankomaten
                     Console.Clear();
                 }
                
-                // Checks if the accounts exsists            
+                // Checks if the accounts exsists in userAccount.           
                 if (rightInput && 
                     (fromAccount < 1 || fromAccount > userAccount[userIndex].Length) || 
                     (toAccount < 1 || toAccount > userAccount[userIndex].Length))
                 {
-                    Console.WriteLine("Något gick fel. Har du angätt rätt konton?");
+                    Console.WriteLine("\nNågot gick fel. Har du angätt rätt konton?\n");
                     rightInput = false;   
                 }
 
