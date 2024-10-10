@@ -329,7 +329,7 @@ namespace Bankomaten
                         {
                             Console.WriteLine("Du har inte tillräckligt mycket pengar på kontot"); // if insufficent funds
                             Console.ReadKey();
-                            i--;
+                            i--;  // Changeing i to give user another chance.
                             rightInput = false;
                         }
                     }
