@@ -306,7 +306,7 @@ namespace Bankomaten
                             }
 
                             // Checks if the accounts exsists in userAccount.           
-                            if (rightInput && fromAccount < 1 || fromAccount > userAccount[userIndex].Length)
+                            if (rightInput && (fromAccount < 1 || fromAccount > userAccount[userIndex].Length))
                             {
                                 Console.WriteLine("\nNågot gick fel. Har du angätt rätt konton?\n");
                                 Console.ReadKey();
@@ -323,14 +323,15 @@ namespace Bankomaten
                             // Withdraw money from selected account.
                             userAccount[userIndex][fromAccount - 1] -= moneyWithraw;
                             Console.WriteLine($"\nDu har tagit ut {moneyWithraw:C} ifrån ditt {userAccountName[fromAccount - 1]} konto. ");
+                            Console.WriteLine("\nTryck på valfri tangent för att komma till menyn");
                             Console.ReadKey();
+                            return;
                         }
                         else
                         {
                             Console.WriteLine("Du har inte tillräckligt mycket pengar på kontot"); // if insufficent funds
                             Console.ReadKey();
                             i--;  // Changeing i to give user another chance.
-                            rightInput = false;
                         }
                     }
                     else if (pinCount == 3)
