@@ -1,3 +1,5 @@
+using System.Security.Principal;
+
 namespace Bankomaten
 {
     internal class Program
@@ -161,7 +163,7 @@ namespace Bankomaten
             int count = 0; // keeping track of number of accounts.
             int fromAccount = 0;
             int toAccount = 0;
-
+            decimal transferAmmount = 0m;
             bool rightInput = false;
 
             userIndex -= 1;
@@ -169,22 +171,27 @@ namespace Bankomaten
             do
             {
                 count = 1;
-                // Displaying users account again if any exception would occur.
+                // Displaying users account.
                 for (int i = 0; i < userAccount[userIndex].Length; i++)
                 {
                     Console.WriteLine($" {count}. {userAccountName[i]} {userAccount[userIndex][i]:C}");
                     count++;
                 }
                 try
-                {   
+                {
                     Console.WriteLine("\n(Välj med en siffra)");
                     Console.WriteLine("Vilket konto vill du flytta ifrån?\n");
                     fromAccount = Convert.ToInt32(Console.ReadLine());
 
                     Console.WriteLine("Vilket konto vill du flytta till?\n");
                     toAccount = Convert.ToInt32(Console.ReadLine());
+
+                    // Asking the user how much to transfer.
+                    Console.WriteLine($"Hur mycket pengar vill du flytta ifrån {userAccountName[fromAccount - 1]}t till {userAccountName[toAccount - 1]}t ");
+                    transferAmmount = Convert.ToDecimal(Console.ReadLine());
                     rightInput = true;
                 }
+                catch (System.IndexOutOfRangeException){}
                 catch (System.FormatException)
                 {
                     Console.WriteLine("Ogiltlig input, försök igen");
@@ -205,10 +212,6 @@ namespace Bankomaten
 
             } while (!rightInput);
             
-            // Asking the user how much to transfer.
-            Console.WriteLine($"Hur mycket pengar vill du flytta ifrån {userAccountName[fromAccount -1]}t till {userAccountName[toAccount -1]}t ");
-            decimal transferAmmount = Convert.ToDecimal(Console.ReadLine());
-
             // Gives new values to the user accounts and displaying from witch account the user transfered money from/to.
             userAccount[userIndex][fromAccount -1] -= transferAmmount;
             userAccount[userIndex][toAccount -1] += transferAmmount;
@@ -252,7 +255,11 @@ namespace Bankomaten
         {
             bool pinOk = false;
             int pinCount = 1;
+            decimal moneyWithraw = 0;
+            int fromAccount = 0;
+            bool rightInput = false;
             userIndex -= 1;
+            
             // Asking user to authenticate with there password.
             do
             {
@@ -265,33 +272,65 @@ namespace Bankomaten
                 {
                     if (userPassword == user[i][2])
                     {
-                        decimal moneyWithraw = 0;
-                        int count = 1;
                         Console.Clear();
-
-                        Console.WriteLine("\nHär är dina konton ");
-                        for (int j = 0; j < userAccount[userIndex].Length; j++)
+                        do
                         {
-                            Console.WriteLine($" {count}. {userAccountName[j]} {userAccount[userIndex][j]:C}"); // Displays the accounts.
-                            count++;
-                        }
-                        Console.WriteLine("\n(Välj med en siffra)");
-                        Console.WriteLine("Vilket konto vill du ta ut pengar ifrån? \n");
-                        int fromAccount = Convert.ToInt32(Console.ReadLine());
+                            int count = 1;
+                            // Displaying users account again if any exception would occur.
+                            Console.WriteLine("Här är dina konton\n");
+                            for (int j = 0; j < userAccount[userIndex].Length; j++)
+                            {
+                                Console.WriteLine($" {count}. {userAccountName[j]} {userAccount[userIndex][j]:C}");
+                                count++;
+                            }
 
-                        Console.WriteLine($"Hur mycket pengar vill du ta ut ifrån ditt {userAccountName[fromAccount - 1]}: ");
-                        moneyWithraw = Convert.ToDecimal(Console.ReadLine());
+                            try
+                            {
+                                Console.WriteLine("\n(Välj med en siffra)");
+                                Console.WriteLine("Vilket konto vill du ta ut pengar ifrån? \n");
+                                fromAccount = Convert.ToInt32(Console.ReadLine());
 
+                                Console.WriteLine($"Hur mycket pengar vill du ta ut ifrån ditt konto?: ");
+                                moneyWithraw = Convert.ToDecimal(Console.ReadLine());
+
+                                rightInput = true; // correct input, break out from the loop.
+                            }
+                            catch (System.IndexOutOfRangeException){}
+                            catch (System.FormatException)
+                            {
+                                Console.WriteLine("Ogiltlig input, försök igen");
+                                rightInput = false;
+                                Console.ReadKey();
+                                Console.Clear();
+                                
+                            }
+
+                            // Checks if the accounts exsists in userAccount.           
+                            if (rightInput && fromAccount < 1 || fromAccount > userAccount[userIndex].Length)
+                            {
+                                Console.WriteLine("\nNågot gick fel. Har du angätt rätt konton?\n");
+                                Console.ReadKey();
+                                Console.Clear();
+                                rightInput = false;
+                            }
+
+                        } while (!rightInput);
+
+                        
                         // Checks if the withdraw value is less or equal to the balance on the account.
                         if (moneyWithraw <= userAccount[userIndex][fromAccount - 1])
                         {
                             // Withdraw money from selected account.
                             userAccount[userIndex][fromAccount - 1] -= moneyWithraw;
                             Console.WriteLine($"\nDu har tagit ut {moneyWithraw:C} ifrån ditt {userAccountName[fromAccount - 1]} konto. ");
+                            Console.ReadKey();
                         }
                         else
                         {
                             Console.WriteLine("Du har inte tillräckligt mycket pengar på kontot"); // if insufficent funds
+                            Console.ReadKey();
+                            i--;
+                            rightInput = false;
                         }
                     }
                     else if (pinCount == 3)
