@@ -189,7 +189,17 @@ namespace Bankomaten
                     // Asking the user how much to transfer.
                     Console.WriteLine($"Hur mycket pengar vill du flytta ifrån {userAccountName[fromAccount - 1]}t till {userAccountName[toAccount - 1]}t ");
                     transferAmmount = Convert.ToDecimal(Console.ReadLine());
-                    rightInput = true;
+                    if (transferAmmount > userAccount[userIndex][fromAccount - 1])
+                    {
+                        Console.WriteLine("Du har inte tillräckligt med pengar på kontot");
+                        Console.ReadKey();
+                        rightInput = false;
+                    }
+                    else
+                    {
+                        rightInput = true;
+                        break;
+                    }
                 }
                 catch (System.IndexOutOfRangeException){}
                 catch (System.FormatException)
